@@ -49,6 +49,25 @@ class PDFConverter:
             print(f"❌ PDF conversion error: {e}")
             return False
     
+    def convert_html_to_pdf(self, html_path: str, invoice_number: str) -> Optional[str]:
+        """Convert HTML file to PDF and return the PDF path."""
+        try:
+            # Generate PDF path
+            output_dir = os.path.dirname(html_path)
+            pdf_path = os.path.join(output_dir, f"{invoice_number}.pdf")
+            
+            # Convert using existing method
+            success = self.html_to_pdf(html_path, pdf_path)
+            
+            if success:
+                return pdf_path
+            else:
+                return None
+                
+        except Exception as e:
+            print(f"❌ PDF conversion error: {e}")
+            return None
+    
     def _install_wkhtmltopdf(self):
         """Install wkhtmltopdf if not available."""
         try:
