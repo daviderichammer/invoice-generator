@@ -31,10 +31,11 @@ class InvoiceGenerator:
         """Generate invoice from WIP entries."""
         # Calculate totals
         total_hours = sum(entry["hours"] for entry in wip_entries)
-        hourly_rate = self.config["invoice"]["hourly_rate"]
-        discount = self.config["invoice"]["discount"]
-        subtotal = total_hours * hourly_rate
-        balance_due = subtotal - discount
+        hourly_rate = self.config["invoice"]["hourly_rate"]  # This is the discounted rate ($126)
+        discount_per_hour = self.config["invoice"]["discount"]  # $49 per hour discount
+        original_rate = hourly_rate + discount_per_hour  # $175 original rate
+        subtotal = total_hours * hourly_rate  # Use the discounted rate for total
+        balance_due = subtotal  # No additional discount - rate already includes discount
         
         # Get invoice date (last work date)
         invoice_date = max(entry["date"] for entry in wip_entries)
@@ -50,8 +51,9 @@ class InvoiceGenerator:
             "summary": {
                 "total_hours": total_hours,
                 "hourly_rate": hourly_rate,
+                "original_rate": original_rate,
+                "discount_per_hour": discount_per_hour,
                 "subtotal": subtotal,
-                "discount": discount,
                 "balance_due": balance_due
             },
             "payment_info": self.config["company"]
@@ -64,8 +66,9 @@ class InvoiceGenerator:
         wip_entries = invoice_data["work_entries"]
         total_hours = invoice_data["summary"]["total_hours"]
         hourly_rate = invoice_data["summary"]["hourly_rate"]
+        original_rate = invoice_data["summary"]["original_rate"]
+        discount_per_hour = invoice_data["summary"]["discount_per_hour"]
         subtotal = invoice_data["summary"]["subtotal"]
-        discount = invoice_data["summary"]["discount"]
         balance_due = invoice_data["summary"]["balance_due"]
         invoice_date = invoice_data["invoice_date"]
         invoice_number = invoice_data["invoice_number"]
@@ -195,7 +198,7 @@ class InvoiceGenerator:
                 <td>{total_hours}</td>
                 <td>Enhancement</td>
                 <td>See attached</td>
-                <td>${discount} / hr off<br>${hourly_rate} / hr</td>
+                <td>${discount_per_hour} / hr off<br>${original_rate} / hr</td>
                 <td>No</td>
                 <td>${hourly_rate}</td>
                 <td>${balance_due:,.0f}</td>
@@ -204,7 +207,7 @@ class InvoiceGenerator:
                 <td>-</td>
                 <td>New Development</td>
                 <td>See attached</td>
-                <td>${discount} / hr off<br>${hourly_rate} / hr</td>
+                <td>${discount_per_hour} / hr off<br>${original_rate} / hr</td>
                 <td>No</td>
                 <td>${hourly_rate}</td>
                 <td>-</td>
