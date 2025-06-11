@@ -213,12 +213,10 @@ class SheetsReaderEnhanced:
             value_updates = []
             format_requests = []
             
-            # Orange color for highlighting (RGB values)
+            # Orange color for highlighting (use exact reference color)
             orange_color = {
-                "red": 1.0,
-                "green": 0.8,
-                "blue": 0.4,
-                "alpha": 1.0
+                "red": 1,
+                "green": 0.6
             }
             
             for entry in wip_entries:
