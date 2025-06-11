@@ -1,0 +1,31 @@
+{
+  "google_sheets": {
+    "credentials_path": "credentials/service_account_credentials.json",
+    "spreadsheet_id": "10uTiq0Z-y4omLGhhyNrXsWE7xNTfS2GkOclmQDA1JZg",
+    "worksheet_name": "Sheet1"
+  },
+  "client": {
+    "name": "National Exemption Service, LLC",
+    "address": "604 Packard Ct",
+    "city_state_zip": "Safety Harbor, FL 34695",
+    "customer_id": "NES01"
+  },
+  "company": {
+    "name": "W3Evolutions Systems LLC",
+    "address": "4826 Troydale Rd, Tampa FL 33615",
+    "zelle": "zelle.wf@w3evolutions.com"
+  },
+  "invoice": {
+    "hourly_rate": 126,
+    "discount": 49,
+    "terms": "NET 30"
+  },
+  "sales_rep": "Brandon Kozak",
+  "output": {
+    "output_dir": "output",
+    "generate_html": true,
+    "generate_pdf": true,
+    "generate_json": true
+  }
+}
+
