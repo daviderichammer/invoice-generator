@@ -23,6 +23,7 @@ class SheetsReader:
             {
                 "date": "6/4/25",
                 "hours": 17,
+                "category": "Enhancement",
                 "description": "AAE-101 UAT bug tracker list review, development and bug fixes",
                 "persons": "BK/DH",
                 "invoice": "NES01-5541"
@@ -30,6 +31,7 @@ class SheetsReader:
             {
                 "date": "6/5/25",
                 "hours": 15,
+                "category": "Enhancement",
                 "description": "AAE-101 UAT bug tracker list review, development and bug fixes",
                 "persons": "BK/DH",
                 "invoice": "NES01-5541"
@@ -37,6 +39,7 @@ class SheetsReader:
             {
                 "date": "6/6/25",
                 "hours": 16,
+                "category": "Enhancement",
                 "description": "AAE-101 UAT bug tracker + ERV2 prod issues, bandaid fixes for stage-qa",
                 "persons": "BK/DH",
                 "invoice": "NES01-5541"
@@ -44,6 +47,7 @@ class SheetsReader:
             {
                 "date": "6/7/25",
                 "hours": 9,
+                "category": "Enhancement",
                 "description": "AAE-101 UAT bug tracker list review, development and bug fixes",
                 "persons": "BK/DH",
                 "invoice": "NES01-5541"
@@ -51,6 +55,7 @@ class SheetsReader:
             {
                 "date": "6/8/25",
                 "hours": 10,
+                "category": "Enhancement",
                 "description": "AAE-101 UAT bug tracker list review, development and bug fixes",
                 "persons": "BK/DH",
                 "invoice": "NES01-5541"
@@ -58,6 +63,7 @@ class SheetsReader:
             {
                 "date": "6/9/25",
                 "hours": 17,
+                "category": "Enhancement",
                 "description": "AAE-101 UAT bug tracker list review, development and bug fixes",
                 "persons": "BK/DH",
                 "invoice": "NES01-5541"
@@ -65,6 +71,7 @@ class SheetsReader:
             {
                 "date": "6/10/25",
                 "hours": 18,
+                "category": "Enhancement",
                 "description": "AAE-101 UAT bug tracker list review, development and bug fixes",
                 "persons": "BK/DH",
                 "invoice": "NES01-5541"

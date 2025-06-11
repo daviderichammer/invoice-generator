@@ -29,7 +29,14 @@ class InvoiceGenerator:
     
     def generate_invoice(self, wip_entries: List[Dict], invoice_number: str) -> Dict[str, Any]:
         """Generate invoice from WIP entries."""
-        # Calculate totals
+        # Calculate totals by category
+        categories = {}
+        for entry in wip_entries:
+            category = entry.get("category", "Enhancement")
+            if category not in categories:
+                categories[category] = 0
+            categories[category] += entry["hours"]
+        
         total_hours = sum(entry["hours"] for entry in wip_entries)
         hourly_rate = self.config["invoice"]["hourly_rate"]  # This is the discounted rate ($126)
         discount_per_hour = self.config["invoice"]["discount"]  # $49 per hour discount
@@ -50,6 +57,7 @@ class InvoiceGenerator:
             "work_entries": wip_entries,
             "summary": {
                 "total_hours": total_hours,
+                "categories": categories,
                 "hourly_rate": hourly_rate,
                 "original_rate": original_rate,
                 "discount_per_hour": discount_per_hour,
@@ -65,6 +73,7 @@ class InvoiceGenerator:
         """Generate HTML invoice."""
         wip_entries = invoice_data["work_entries"]
         total_hours = invoice_data["summary"]["total_hours"]
+        categories = invoice_data["summary"]["categories"]
         hourly_rate = invoice_data["summary"]["hourly_rate"]
         original_rate = invoice_data["summary"]["original_rate"]
         discount_per_hour = invoice_data["summary"]["discount_per_hour"]
@@ -193,25 +202,38 @@ class InvoiceGenerator:
                 <th>Total</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody>"""
+        
+        # Generate rows for each category
+        for category, hours in categories.items():
+            category_total = hours * hourly_rate
+            html_content += f"""
             <tr>
-                <td>{total_hours}</td>
-                <td>Enhancement</td>
+                <td>{hours}</td>
+                <td>{category}</td>
                 <td>See attached</td>
                 <td>${discount_per_hour} / hr off<br>${original_rate} / hr</td>
                 <td>No</td>
                 <td>${hourly_rate}</td>
-                <td>${balance_due:,.0f}</td>
-            </tr>
+                <td>${category_total:,.0f}</td>
+            </tr>"""
+        
+        # Add empty rows for categories not used (to maintain format)
+        all_categories = ["Enhancement", "New Development"]
+        for category in all_categories:
+            if category not in categories:
+                html_content += f"""
             <tr>
                 <td>-</td>
-                <td>New Development</td>
+                <td>{category}</td>
                 <td>See attached</td>
                 <td>${discount_per_hour} / hr off<br>${original_rate} / hr</td>
                 <td>No</td>
                 <td>${hourly_rate}</td>
                 <td>-</td>
-            </tr>
+            </tr>"""
+        
+        html_content += f"""
         </tbody>
     </table>
 
@@ -258,7 +280,7 @@ class InvoiceGenerator:
                 <tr>
                     <td>{entry['date']}</td>
                     <td>{entry['hours']}</td>
-                    <td>Enhancement</td>
+                    <td>{entry.get('category', 'Enhancement')}</td>
                     <td>{entry['description']}</td>
                     <td>{entry['persons']}</td>
                 </tr>"""
